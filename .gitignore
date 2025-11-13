@@ -8,6 +8,7 @@ env/
 .env
 *.env.*
 !.env.example
+credentials.json
 
 # 3. 파이썬 캐시
 __pycache__/
