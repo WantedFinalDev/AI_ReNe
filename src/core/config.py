@@ -7,7 +7,6 @@ class Settings(BaseSettings):
     """
     OPENAI_API_KEY: str
 
-
     STT_PROVIDER: str = "naver"
     TTS_PROVIDER: str = "naver"
 
