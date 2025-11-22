@@ -1,4 +1,4 @@
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     """
@@ -26,8 +26,22 @@ class Settings(BaseSettings):
     DAILY_NOTES_GOOGLE_SHEET_ID: str
     GOOGLE_SHEETS_CREDENTIALS_PATH: str
 
-    class Config:
-        env_file = ".env"
+    # MySQL
+    DB_USER: str
+    DB_PASSWORD: str
+    DB_HOST: str
+    DB_PORT:int = 3306
+    DB_NAME: str
+
+    @property
+    def DATABASE_URL(self) -> str:
+        return f"mysql+pymysql://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
+    
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore"  # .env에 정의되지 않은 변수가 있어도 무시함 (에러 방지)
+    )
 try:
     settings = Settings()
 except Exception as e:
